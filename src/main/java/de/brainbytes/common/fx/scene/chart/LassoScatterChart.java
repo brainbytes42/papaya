@@ -1,6 +1,7 @@
 
 package de.brainbytes.common.fx.scene.chart;
 
+import javafx.beans.NamedArg;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -38,7 +39,8 @@ public class LassoScatterChart<X extends Number, Y extends Number> extends Scatt
    * @param xAxis
    * @param yAxis
    */
-  public LassoScatterChart(final Axis<X> xAxis, final Axis<Y> yAxis) {
+  public LassoScatterChart(@NamedArg("xAxis") final Axis<X> xAxis,
+      @NamedArg("yAxis") final Axis<Y> yAxis) {
     this(xAxis, yAxis, FXCollections.observableArrayList());
   }
 
@@ -47,8 +49,9 @@ public class LassoScatterChart<X extends Number, Y extends Number> extends Scatt
    * @param yAxis
    * @param data
    */
-  public LassoScatterChart(final Axis<X> xAxis, final Axis<Y> yAxis,
-      final ObservableList<Series<X, Y>> data) {
+  public LassoScatterChart(@NamedArg("xAxis") final Axis<X> xAxis,
+      @NamedArg("yAxis") final Axis<Y> yAxis,
+      @NamedArg("data") final ObservableList<Series<X, Y>> data) {
 
     super(xAxis, yAxis, data);
 
