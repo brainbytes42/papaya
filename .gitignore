@@ -6,17 +6,18 @@ bin/
 target/
 build/
 dist/
+out/
 
 # files for Eclipse
 .settings/
-.classpath
-.project
+*.classpath
+*.project
 
 # files for IntelliJ
 .idea/
-.iml
-.iws
-.ipr
+*.iml
+*.iws
+*.ipr
 
 # files for NetBeans
 nbproject/
@@ -27,10 +28,3 @@ nb-configuration.xml
 
 # misc
 thumbs.db
-*.pmd
-designer.settings
-*.log
-*.settings
-*.roca
-/RocaOptimizer/generator/
-Misc/MMusterTrainer/.temp/MMusterTrainer/MMusterTrainer.properties
