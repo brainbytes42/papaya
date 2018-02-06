@@ -15,37 +15,78 @@ public abstract class TreeNode<T extends TreeNode<T>> {
     private Set<T> children = new HashSet<>();
 
     private Set<HierarchyObserver<T>> hierarchyObservers = new CopyOnWriteArraySet<>();
-
+    private T oldParent = null;
     private HierarchyObserver<T> childHierarchyObservationForwarder = new HierarchyObserver<T>() {
         @Override
-        public void onChildrenAdded(T eventSource, T changedNode, Set<T> children) {
-            notifyObservers(o -> o.onChildrenAdded(TreeNode.this, changedNode, children));
+        public void onChildrenAdded(T eventSource, T changedNode, Set<T> addedChildren) {
+
+            boolean muteObservers = false;
+            if (addedChildren.size() == 1) { // could be induced by setParent(); check if node moved inside branch
+                TreeNode<T> addedChild = addedChildren.iterator().next();
+                TreeNode<T> traverseBranch = ((TreeNode) addedChild).oldParent;
+                while (traverseBranch != null) {
+                    traverseBranch = traverseBranch.getParent().orElse(null);
+                    if (TreeNode.this == traverseBranch) {
+                        muteObservers = true;
+                    }
+                }
+            }
+
+            if(!muteObservers)
+                notifyObservers(o -> o.onChildrenAdded(TreeNode.this, changedNode, addedChildren));
         }
 
         @Override
-        public void onChildrenRemoved(T eventSource, T changedNode, Set<T> children) {
-            notifyObservers(o -> o.onChildrenRemoved(TreeNode.this, changedNode, children));
+        public void onChildrenRemoved(T eventSource, T changedNode, Set<T> removedChildren) {
+
+            boolean muteObservers = false;
+            if (removedChildren.size() == 1) { // could be induced by setParent(); check if node moved inside branch
+                TreeNode<T> removedChild = removedChildren.iterator().next();
+                TreeNode<T> traverseBranch = removedChild.getParent().orElse(null);
+                while (traverseBranch != null) {
+                    traverseBranch = traverseBranch.getParent().orElse(null);
+                    if (TreeNode.this == traverseBranch) {
+                        muteObservers = true;
+                    }
+                }
+            }
+
+            if(!muteObservers)
+                notifyObservers(o -> o.onChildrenRemoved(TreeNode.this, changedNode, removedChildren));
         }
     };
-
+    //    private T newParent = null;
+    private boolean allowSetParent = true;
 
     public Optional<T> getParent() {
         return Optional.ofNullable(parent);
     }
 
-    public void setParent(T newParent) {
-        if (this.parent != newParent) {
+    public void setParent(final T newParent) {
+        if (newParent == this) {
+            throw new IllegalArgumentException("TreeNode " + this + " cannot be parent to itself!");
+        } else if (this.parent != newParent && this.allowSetParent) {
 
-            getParent().ifPresent(parent -> ((TreeNode) parent).removeChild(this));
+            this.oldParent = getParent().orElse(null);
+            //            this.newParent = newParent;
+
+            if (this.oldParent != null) {
+                this.allowSetParent = false;
+                ((TreeNode) this.oldParent).removeChild(this); // sets parent null!
+                this.allowSetParent = true;
+            }
 
             this.parent = newParent;
 
-            if (newParent != null) {
-                ((TreeNode) newParent).addChild(this);
+            if (this.parent != null) {
+                this.allowSetParent = false;
+                ((TreeNode) this.parent).addChild(this);
+                this.allowSetParent = true;
             }
 
             notifyObservers(o -> o.onParentChanged(this, getParent()));
 
+            this.oldParent = null; // clean up
         }
     }
 
@@ -62,6 +103,7 @@ public abstract class TreeNode<T extends TreeNode<T>> {
         if (added) {
             ((TreeNode) child).setParent(this);
             child.addObserver(this.childHierarchyObservationForwarder);
+
             notifyObservers(o -> o.onChildrenAdded(this, this, Collections.singleton(child)));
         }
         return added;
@@ -101,7 +143,6 @@ public abstract class TreeNode<T extends TreeNode<T>> {
     }
 
     public boolean removeChild(T child) {
-
         boolean removed = children.remove(child);
         if (removed) {
             child.setParent(null);
@@ -157,10 +198,10 @@ public abstract class TreeNode<T extends TreeNode<T>> {
 
     public interface HierarchyObserver<T extends TreeNode<T>> {
 
-        default void onChildrenAdded(T eventSource, T changedNode, Set<T> children) {
+        default void onChildrenAdded(T eventSource, T changedNode, Set<T> addedChildren) {
         }
 
-        default void onChildrenRemoved(T eventSource, T changedNode, Set<T> children) {
+        default void onChildrenRemoved(T eventSource, T changedNode, Set<T> removedChildren) {
         }
 
         default void onParentChanged(T source, Optional<T> newParent) {

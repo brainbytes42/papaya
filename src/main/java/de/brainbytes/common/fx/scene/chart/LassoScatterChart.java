@@ -36,8 +36,7 @@ public class LassoScatterChart<X extends Number, Y extends Number> extends Scatt
       new SimpleObjectProperty<>(new DropShadow(BlurType.TWO_PASS_BOX, Color.GRAY, 12, 0.2, 0, 0));
 
   /**
-   * @param xAxis
-   * @param yAxis
+   * @see ScatterChart#ScatterChart(Axis, Axis)
    */
   public LassoScatterChart(@NamedArg("xAxis") final Axis<X> xAxis,
       @NamedArg("yAxis") final Axis<Y> yAxis) {
@@ -45,9 +44,7 @@ public class LassoScatterChart<X extends Number, Y extends Number> extends Scatt
   }
 
   /**
-   * @param xAxis
-   * @param yAxis
-   * @param data
+   * @see ScatterChart#ScatterChart(Axis, Axis, ObservableList)
    */
   public LassoScatterChart(@NamedArg("xAxis") final Axis<X> xAxis,
       @NamedArg("yAxis") final Axis<Y> yAxis,
