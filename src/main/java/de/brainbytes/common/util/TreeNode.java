@@ -15,48 +15,60 @@ public abstract class TreeNode<T extends TreeNode<T>> {
     private Set<T> children = new HashSet<>();
 
     private Set<HierarchyObserver<T>> hierarchyObservers = new CopyOnWriteArraySet<>();
-    private T oldParent = null;
+
     private HierarchyObserver<T> childHierarchyObservationForwarder = new HierarchyObserver<T>() {
         @Override
         public void onChildrenAdded(T eventSource, T changedNode, Set<T> addedChildren) {
 
-            boolean muteObservers = false;
-            if (addedChildren.size() == 1) { // could be induced by setParent(); check if node moved inside branch
+            boolean moveInSubtree = false;
+
+            if(addedChildren.size() == 1){
                 TreeNode<T> addedChild = addedChildren.iterator().next();
-                TreeNode<T> traverseBranch = ((TreeNode) addedChild).oldParent;
-                while (traverseBranch != null) {
-                    traverseBranch = traverseBranch.getParent().orElse(null);
-                    if (TreeNode.this == traverseBranch) {
-                        muteObservers = true;
-                    }
-                }
+                if(addedChild.isMoving!=null && TreeNode.this.subtreeContains(addedChild.isMoving.from))
+                    moveInSubtree=true;
             }
 
-            if(!muteObservers)
+            if (!moveInSubtree) {
                 notifyObservers(o -> o.onChildrenAdded(TreeNode.this, changedNode, addedChildren));
+            }
         }
 
         @Override
         public void onChildrenRemoved(T eventSource, T changedNode, Set<T> removedChildren) {
 
-            boolean muteObservers = false;
-            if (removedChildren.size() == 1) { // could be induced by setParent(); check if node moved inside branch
-                TreeNode<T> removedChild = removedChildren.iterator().next();
-                TreeNode<T> traverseBranch = removedChild.getParent().orElse(null);
-                while (traverseBranch != null) {
-                    traverseBranch = traverseBranch.getParent().orElse(null);
-                    if (TreeNode.this == traverseBranch) {
-                        muteObservers = true;
-                    }
-                }
+            boolean moveInSubtree = false;
+
+            if(removedChildren.size() == 1){
+                TreeNode<T> addedChild = removedChildren.iterator().next();
+                if(addedChild.isMoving!=null && TreeNode.this.subtreeContains(addedChild.isMoving.to))
+                    moveInSubtree=true;
             }
 
-            if(!muteObservers)
+            if (!moveInSubtree) {
                 notifyObservers(o -> o.onChildrenRemoved(TreeNode.this, changedNode, removedChildren));
+            }
         }
     };
-    //    private T newParent = null;
-    private boolean allowSetParent = true;
+
+    private boolean subtreeContains(TreeNode<T> node) {
+
+        if (node == null) {
+            throw new NullPointerException("Node to check is null!");
+        }
+
+        TreeNode<T> traverseNode = node;
+
+        while (traverseNode != null) {
+            if (this == traverseNode) {
+                return true;
+            }
+            traverseNode = traverseNode.getParent().orElse(null);
+        }
+
+        return false;
+    }
+
+    private Moving isMoving = null;
 
     public Optional<T> getParent() {
         return Optional.ofNullable(parent);
@@ -65,28 +77,21 @@ public abstract class TreeNode<T extends TreeNode<T>> {
     public void setParent(final T newParent) {
         if (newParent == this) {
             throw new IllegalArgumentException("TreeNode " + this + " cannot be parent to itself!");
-        } else if (this.parent != newParent && this.allowSetParent) {
+        } else if (this.parent != newParent && isMoving == null) {
 
-            this.oldParent = getParent().orElse(null);
-            //            this.newParent = newParent;
-
-            if (this.oldParent != null) {
-                this.allowSetParent = false;
-                ((TreeNode) this.oldParent).removeChild(this); // sets parent null!
-                this.allowSetParent = true;
+            if(this.parent!=null && newParent!=null){
+                this.isMoving = new Moving(this.parent, newParent);
             }
+
+            getParent().ifPresent(p -> ((TreeNode) p).removeChild(this));
 
             this.parent = newParent;
 
-            if (this.parent != null) {
-                this.allowSetParent = false;
-                ((TreeNode) this.parent).addChild(this);
-                this.allowSetParent = true;
-            }
+            getParent().ifPresent(p -> ((TreeNode) p).addChild(this));
 
             notifyObservers(o -> o.onParentChanged(this, getParent()));
 
-            this.oldParent = null; // clean up
+            this.isMoving = null; // clean up
         }
     }
 
@@ -205,6 +210,16 @@ public abstract class TreeNode<T extends TreeNode<T>> {
         }
 
         default void onParentChanged(T source, Optional<T> newParent) {
+        }
+    }
+
+    private class Moving {
+        private final T from;
+        private final T to;
+
+        private Moving(T from, T to) {
+            this.from = from;
+            this.to = to;
         }
     }
 }

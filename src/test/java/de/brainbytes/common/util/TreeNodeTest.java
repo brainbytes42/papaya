@@ -539,8 +539,8 @@ public class TreeNodeTest {
 
     @Test
     public void transitiveChangesInSubtreeAreObservableForSingleAddedChild() throws Exception {
-        Set<TestTreeNode> addedChildren = new HashSet<>();
-        Set<TestTreeNode> removedChildren = new HashSet<>();
+        Set<TestTreeNode> addedChildrenResults = new HashSet<>();
+        Set<TestTreeNode> removedChildrenResults = new HashSet<>();
 
         TestTreeNode observedChild = new TestTreeNode();
         nodeUnderTest.addChild(observedChild); // single child
@@ -553,7 +553,7 @@ public class TreeNodeTest {
             public void onChildrenAdded(TestTreeNode eventSource,
                                         TestTreeNode changedNode,
                                         Set<TestTreeNode> addedChildren) {
-                addedChildren.addAll(addedChildren);
+                addedChildrenResults.addAll(addedChildren);
 
                 observedEventSource[0] = eventSource;
                 observedChangedNode[0] = changedNode;
@@ -563,7 +563,7 @@ public class TreeNodeTest {
             public void onChildrenRemoved(TestTreeNode eventSource,
                                           TestTreeNode changedNode,
                                           Set<TestTreeNode> removedChildren) {
-                removedChildren.addAll(removedChildren);
+                removedChildrenResults.addAll(removedChildren);
 
                 observedEventSource[1] = eventSource;
                 observedChangedNode[1] = changedNode;
@@ -577,8 +577,8 @@ public class TreeNodeTest {
         observedChild.removeChild(singleChild);
         observedChild.removeChildren(multiChild);
 
-        assertThat(addedChildren, containsInAnyOrder(singleChild, multiChild.get(0)));
-        assertThat(removedChildren, containsInAnyOrder(singleChild, multiChild.get(0)));
+        assertThat(addedChildrenResults, containsInAnyOrder(singleChild, multiChild.get(0)));
+        assertThat(removedChildrenResults, containsInAnyOrder(singleChild, multiChild.get(0)));
 
         assertThat(observedEventSource[0], is(nodeUnderTest));
         assertThat(observedChangedNode[0], is(observedChild));
@@ -589,8 +589,8 @@ public class TreeNodeTest {
 
     @Test
     public void transitiveChangesInSubtreeAreObservableForMultiAddedChild() throws Exception {
-        Set<TestTreeNode> addedChildren = new HashSet<>();
-        Set<TestTreeNode> removedChildren = new HashSet<>();
+        Set<TestTreeNode> addedChildrenResults = new HashSet<>();
+        Set<TestTreeNode> removedChildrenResults = new HashSet<>();
 
         TestTreeNode observedChild = new TestTreeNode();
         nodeUnderTest.addChildren(Collections.singleton(observedChild));  // add collection
@@ -603,7 +603,7 @@ public class TreeNodeTest {
             public void onChildrenAdded(TestTreeNode eventSource,
                                         TestTreeNode changedNode,
                                         Set<TestTreeNode> addedChildren) {
-                addedChildren.addAll(addedChildren);
+                addedChildrenResults.addAll(addedChildren);
 
                 observedEventSource[0] = eventSource;
                 observedChangedNode[0] = changedNode;
@@ -613,7 +613,7 @@ public class TreeNodeTest {
             public void onChildrenRemoved(TestTreeNode eventSource,
                                           TestTreeNode changedNode,
                                           Set<TestTreeNode> removedChildren) {
-                removedChildren.addAll(removedChildren);
+                removedChildrenResults.addAll(removedChildren);
 
                 observedEventSource[1] = eventSource;
                 observedChangedNode[1] = changedNode;
@@ -627,8 +627,8 @@ public class TreeNodeTest {
         observedChild.removeChild(singleChild);
         observedChild.removeChildren(multiChild);
 
-        assertThat(addedChildren, containsInAnyOrder(singleChild, multiChild.get(0)));
-        assertThat(removedChildren, containsInAnyOrder(singleChild, multiChild.get(0)));
+        assertThat(addedChildrenResults, containsInAnyOrder(singleChild, multiChild.get(0)));
+        assertThat(removedChildrenResults, containsInAnyOrder(singleChild, multiChild.get(0)));
 
         assertThat(observedEventSource[0], is(nodeUnderTest));
         assertThat(observedChangedNode[0], is(observedChild));
@@ -638,8 +638,8 @@ public class TreeNodeTest {
 
     @Test
     public void removingSingleMutesTransitiveChanges() throws Exception {
-        Set<TestTreeNode> addedChildren = new HashSet<>();
-        Set<TestTreeNode> removedChildren = new HashSet<>();
+        Set<TestTreeNode> addedChildrenResults = new HashSet<>();
+        Set<TestTreeNode> removedChildrenResults = new HashSet<>();
 
         TestTreeNode observedChild = new TestTreeNode();
         nodeUnderTest.addChild(observedChild);
@@ -649,20 +649,20 @@ public class TreeNodeTest {
             public void onChildrenAdded(TestTreeNode eventSource,
                                         TestTreeNode changedNode,
                                         Set<TestTreeNode> addedChildren) {
-                addedChildren.addAll(addedChildren);
+                addedChildrenResults.addAll(addedChildren);
             }
 
             @Override
             public void onChildrenRemoved(TestTreeNode eventSource,
                                           TestTreeNode changedNode,
                                           Set<TestTreeNode> removedChildren) {
-                removedChildren.addAll(removedChildren);
+                removedChildrenResults.addAll(removedChildren);
             }
         });
 
         nodeUnderTest.removeChild(observedChild); // single
-        addedChildren.clear(); // cleanup for direct modifications
-        removedChildren.clear();
+        addedChildrenResults.clear(); // cleanup for direct modifications
+        removedChildrenResults.clear();
 
         TestTreeNode singleChild = new TestTreeNode();
         observedChild.addChild(singleChild);
@@ -671,14 +671,14 @@ public class TreeNodeTest {
         observedChild.removeChild(singleChild);
         observedChild.removeChildren(multiChild);
 
-        assertThat(addedChildren, is(empty()));
-        assertThat(removedChildren, is(empty()));
+        assertThat(addedChildrenResults, is(empty()));
+        assertThat(removedChildrenResults, is(empty()));
     }
 
     @Test
     public void removingMultipleMutesTransitiveChanges() throws Exception {
-        Set<TestTreeNode> addedChildren = new HashSet<>();
-        Set<TestTreeNode> removedChildren = new HashSet<>();
+        Set<TestTreeNode> addedChildrenResults = new HashSet<>();
+        Set<TestTreeNode> removedChildrenResults = new HashSet<>();
 
         TestTreeNode observedChild = new TestTreeNode();
         nodeUnderTest.addChild(observedChild);
@@ -688,20 +688,20 @@ public class TreeNodeTest {
             public void onChildrenAdded(TestTreeNode eventSource,
                                         TestTreeNode changedNode,
                                         Set<TestTreeNode> addedChildren) {
-                addedChildren.addAll(addedChildren);
+                addedChildrenResults.addAll(addedChildren);
             }
 
             @Override
             public void onChildrenRemoved(TestTreeNode eventSource,
                                           TestTreeNode changedNode,
                                           Set<TestTreeNode> removedChildren) {
-                removedChildren.addAll(removedChildren);
+                removedChildrenResults.addAll(removedChildren);
             }
         });
 
         nodeUnderTest.removeChildren(Collections.singleton(observedChild)); // multiple
-        addedChildren.clear(); // cleanup for direct modifications
-        removedChildren.clear();
+        addedChildrenResults.clear(); // cleanup for direct modifications
+        removedChildrenResults.clear();
 
         TestTreeNode singleChild = new TestTreeNode();
         observedChild.addChild(singleChild);
@@ -710,8 +710,8 @@ public class TreeNodeTest {
         observedChild.removeChild(singleChild);
         observedChild.removeChildren(multiChild);
 
-        assertThat(addedChildren, is(empty()));
-        assertThat(removedChildren, is(empty()));
+        assertThat(addedChildrenResults, is(empty()));
+        assertThat(removedChildrenResults, is(empty()));
     }
 
     @Test

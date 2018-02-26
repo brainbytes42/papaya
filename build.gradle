@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'maven-publish'
 
 group = 'de.brainbytes.common'
-version = '0.1'
+version = '0.1.1'
 
 sourceCompatibility = '1.8'
 
