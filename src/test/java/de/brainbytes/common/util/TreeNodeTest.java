@@ -298,9 +298,7 @@ public class TreeNodeTest {
         final Set<TestTreeNode> observedChildren = new HashSet<>();
         nodeUnderTest.addObserver(new TreeNode.HierarchyObserver<TestTreeNode>() {
             @Override
-            public void onChildrenAdded(TestTreeNode eventSource,
-                                        TestTreeNode changedNode,
-                                        Set<TestTreeNode> addedChildren) {
+            public void onChildrenAdded(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> addedChildren) {
                 observedChildren.addAll(addedChildren);
             }
         });
@@ -316,9 +314,7 @@ public class TreeNodeTest {
         final Set<TestTreeNode> observedChildren = new HashSet<>();
         nodeUnderTest.addObserver(new TreeNode.HierarchyObserver<TestTreeNode>() {
             @Override
-            public void onChildrenAdded(TestTreeNode eventSource,
-                                        TestTreeNode changedNode,
-                                        Set<TestTreeNode> addedChildren) {
+            public void onChildrenAdded(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> addedChildren) {
                 observedChildren.addAll(addedChildren);
             }
         });
@@ -334,9 +330,7 @@ public class TreeNodeTest {
         final Set<TestTreeNode> observedChildren = new HashSet<>();
         nodeUnderTest.addObserver(new TreeNode.HierarchyObserver<TestTreeNode>() {
             @Override
-            public void onChildrenRemoved(TestTreeNode eventSource,
-                                          TestTreeNode changedNode,
-                                          Set<TestTreeNode> removedChildren) {
+            public void onChildrenRemoved(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> removedChildren) {
                 observedChildren.addAll(removedChildren);
             }
         });
@@ -355,9 +349,7 @@ public class TreeNodeTest {
         final Set<TestTreeNode> observedChildren = new HashSet<>();
         nodeUnderTest.addObserver(new TreeNode.HierarchyObserver<TestTreeNode>() {
             @Override
-            public void onChildrenRemoved(TestTreeNode eventSource,
-                                          TestTreeNode changedNode,
-                                          Set<TestTreeNode> removedChildren) {
+            public void onChildrenRemoved(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> removedChildren) {
                 observedChildren.addAll(removedChildren);
             }
         });
@@ -378,9 +370,7 @@ public class TreeNodeTest {
         final Set<TestTreeNode> observedChildren = new HashSet<>();
         nodeUnderTest.addObserver(new TreeNode.HierarchyObserver<TestTreeNode>() {
             @Override
-            public void onChildrenAdded(TestTreeNode eventSource,
-                                        TestTreeNode changedNode,
-                                        Set<TestTreeNode> addedChildren) {
+            public void onChildrenAdded(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> addedChildren) {
                 observedChildren.addAll(addedChildren);
             }
         });
@@ -390,8 +380,7 @@ public class TreeNodeTest {
         nodeUnderTest.addChildren(Arrays.asList(addedFirst, addedSecond)); // add first again
 
         assertThat(observedChildren, containsInAnyOrder(addedSecond));
-        assertThat("Nevertheless, two children are expected.", nodeUnderTest.getChildren(),
-                   containsInAnyOrder(addedFirst, addedSecond));
+        assertThat("Nevertheless, two children are expected.", nodeUnderTest.getChildren(), containsInAnyOrder(addedFirst, addedSecond));
     }
 
     @Test
@@ -399,9 +388,7 @@ public class TreeNodeTest {
         final Set<TestTreeNode> observedChildren = new HashSet<>();
         nodeUnderTest.addObserver(new TreeNode.HierarchyObserver<TestTreeNode>() {
             @Override
-            public void onChildrenRemoved(TestTreeNode eventSource,
-                                          TestTreeNode changedNode,
-                                          Set<TestTreeNode> removedChildren) {
+            public void onChildrenRemoved(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> removedChildren) {
                 observedChildren.addAll(removedChildren);
             }
         });
@@ -421,9 +408,7 @@ public class TreeNodeTest {
 
         nodeUnderTest.addObserver(new TreeNode.HierarchyObserver<TestTreeNode>() {
             @Override
-            public void onChildrenAdded(TestTreeNode eventSource,
-                                        TestTreeNode changedNode,
-                                        Set<TestTreeNode> addedChildren) {
+            public void onChildrenAdded(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> addedChildren) {
                 triggered[0]++;
             }
         });
@@ -441,9 +426,7 @@ public class TreeNodeTest {
         nodeUnderTest.addChildren(Arrays.asList(new TestTreeNode(), new TestTreeNode()));
         nodeUnderTest.addObserver(new TreeNode.HierarchyObserver<TestTreeNode>() {
             @Override
-            public void onChildrenRemoved(TestTreeNode eventSource,
-                                          TestTreeNode changedNode,
-                                          Set<TestTreeNode> removedChildren) {
+            public void onChildrenRemoved(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> removedChildren) {
                 triggered[0]++;
             }
         });
@@ -459,9 +442,7 @@ public class TreeNodeTest {
         TestTreeNode[] observedChangedNode = {null};
         nodeUnderTest.addObserver(new TreeNode.HierarchyObserver<TestTreeNode>() {
             @Override
-            public void onChildrenAdded(TestTreeNode eventSource,
-                                        TestTreeNode changedNode,
-                                        Set<TestTreeNode> addedChildren) {
+            public void onChildrenAdded(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> addedChildren) {
                 observedEventSource[0] = eventSource;
                 observedChangedNode[0] = changedNode;
             }
@@ -479,9 +460,7 @@ public class TreeNodeTest {
         TestTreeNode[] observedChangedNode = {null};
         nodeUnderTest.addObserver(new TreeNode.HierarchyObserver<TestTreeNode>() {
             @Override
-            public void onChildrenAdded(TestTreeNode eventSource,
-                                        TestTreeNode changedNode,
-                                        Set<TestTreeNode> addedChildren) {
+            public void onChildrenAdded(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> addedChildren) {
                 observedEventSource[0] = eventSource;
                 observedChangedNode[0] = changedNode;
             }
@@ -501,9 +480,7 @@ public class TreeNodeTest {
         TestTreeNode[] observedChangedNode = {null};
         nodeUnderTest.addObserver(new TreeNode.HierarchyObserver<TestTreeNode>() {
             @Override
-            public void onChildrenRemoved(TestTreeNode eventSource,
-                                          TestTreeNode changedNode,
-                                          Set<TestTreeNode> removedChildren) {
+            public void onChildrenRemoved(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> removedChildren) {
                 observedEventSource[0] = eventSource;
                 observedChangedNode[0] = changedNode;
             }
@@ -523,9 +500,7 @@ public class TreeNodeTest {
         TestTreeNode[] observedChangedNode = {null};
         nodeUnderTest.addObserver(new TreeNode.HierarchyObserver<TestTreeNode>() {
             @Override
-            public void onChildrenRemoved(TestTreeNode eventSource,
-                                          TestTreeNode changedNode,
-                                          Set<TestTreeNode> removedChildren) {
+            public void onChildrenRemoved(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> removedChildren) {
                 observedEventSource[0] = eventSource;
                 observedChangedNode[0] = changedNode;
             }
@@ -550,9 +525,7 @@ public class TreeNodeTest {
 
         nodeUnderTest.addObserver(new TreeNode.HierarchyObserver<TestTreeNode>() {
             @Override
-            public void onChildrenAdded(TestTreeNode eventSource,
-                                        TestTreeNode changedNode,
-                                        Set<TestTreeNode> addedChildren) {
+            public void onChildrenAdded(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> addedChildren) {
                 addedChildrenResults.addAll(addedChildren);
 
                 observedEventSource[0] = eventSource;
@@ -560,9 +533,7 @@ public class TreeNodeTest {
             }
 
             @Override
-            public void onChildrenRemoved(TestTreeNode eventSource,
-                                          TestTreeNode changedNode,
-                                          Set<TestTreeNode> removedChildren) {
+            public void onChildrenRemoved(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> removedChildren) {
                 removedChildrenResults.addAll(removedChildren);
 
                 observedEventSource[1] = eventSource;
@@ -600,9 +571,7 @@ public class TreeNodeTest {
 
         nodeUnderTest.addObserver(new TreeNode.HierarchyObserver<TestTreeNode>() {
             @Override
-            public void onChildrenAdded(TestTreeNode eventSource,
-                                        TestTreeNode changedNode,
-                                        Set<TestTreeNode> addedChildren) {
+            public void onChildrenAdded(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> addedChildren) {
                 addedChildrenResults.addAll(addedChildren);
 
                 observedEventSource[0] = eventSource;
@@ -610,9 +579,7 @@ public class TreeNodeTest {
             }
 
             @Override
-            public void onChildrenRemoved(TestTreeNode eventSource,
-                                          TestTreeNode changedNode,
-                                          Set<TestTreeNode> removedChildren) {
+            public void onChildrenRemoved(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> removedChildren) {
                 removedChildrenResults.addAll(removedChildren);
 
                 observedEventSource[1] = eventSource;
@@ -646,16 +613,12 @@ public class TreeNodeTest {
 
         nodeUnderTest.addObserver(new TreeNode.HierarchyObserver<TestTreeNode>() {
             @Override
-            public void onChildrenAdded(TestTreeNode eventSource,
-                                        TestTreeNode changedNode,
-                                        Set<TestTreeNode> addedChildren) {
+            public void onChildrenAdded(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> addedChildren) {
                 addedChildrenResults.addAll(addedChildren);
             }
 
             @Override
-            public void onChildrenRemoved(TestTreeNode eventSource,
-                                          TestTreeNode changedNode,
-                                          Set<TestTreeNode> removedChildren) {
+            public void onChildrenRemoved(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> removedChildren) {
                 removedChildrenResults.addAll(removedChildren);
             }
         });
@@ -685,16 +648,12 @@ public class TreeNodeTest {
 
         nodeUnderTest.addObserver(new TreeNode.HierarchyObserver<TestTreeNode>() {
             @Override
-            public void onChildrenAdded(TestTreeNode eventSource,
-                                        TestTreeNode changedNode,
-                                        Set<TestTreeNode> addedChildren) {
+            public void onChildrenAdded(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> addedChildren) {
                 addedChildrenResults.addAll(addedChildren);
             }
 
             @Override
-            public void onChildrenRemoved(TestTreeNode eventSource,
-                                          TestTreeNode changedNode,
-                                          Set<TestTreeNode> removedChildren) {
+            public void onChildrenRemoved(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> removedChildren) {
                 removedChildrenResults.addAll(removedChildren);
             }
         });
@@ -770,16 +729,12 @@ public class TreeNodeTest {
         Set<TestTreeNode> nodeUnderTestRemoved = new HashSet<>();
         nodeUnderTest.addObserver(new TreeNode.HierarchyObserver<TestTreeNode>() {
             @Override
-            public void onChildrenAdded(TestTreeNode eventSource,
-                                        TestTreeNode changedNode,
-                                        Set<TestTreeNode> addedChildren) {
+            public void onChildrenAdded(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> addedChildren) {
                 nodeUnderTestAdded.addAll(addedChildren);
             }
 
             @Override
-            public void onChildrenRemoved(TestTreeNode eventSource,
-                                          TestTreeNode changedNode,
-                                          Set<TestTreeNode> removedChildren) {
+            public void onChildrenRemoved(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> removedChildren) {
                 nodeUnderTestRemoved.addAll(removedChildren);
             }
         });
@@ -788,16 +743,12 @@ public class TreeNodeTest {
         Set<TestTreeNode> newParentRemoved = new HashSet<>();
         newParent.addObserver(new TreeNode.HierarchyObserver<TestTreeNode>() {
             @Override
-            public void onChildrenAdded(TestTreeNode eventSource,
-                                        TestTreeNode changedNode,
-                                        Set<TestTreeNode> addedChildren) {
+            public void onChildrenAdded(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> addedChildren) {
                 newParentAdded.addAll(addedChildren);
             }
 
             @Override
-            public void onChildrenRemoved(TestTreeNode eventSource,
-                                          TestTreeNode changedNode,
-                                          Set<TestTreeNode> removedChildren) {
+            public void onChildrenRemoved(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> removedChildren) {
                 newParentRemoved.addAll(removedChildren);
             }
         });
@@ -806,36 +757,32 @@ public class TreeNodeTest {
         Set<TestTreeNode> oldParentRemoved = new HashSet<>();
         oldParent.addObserver(new TreeNode.HierarchyObserver<TestTreeNode>() {
             @Override
-            public void onChildrenAdded(TestTreeNode eventSource,
-                                        TestTreeNode changedNode,
-                                        Set<TestTreeNode> addedChildren) {
+            public void onChildrenAdded(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> addedChildren) {
                 oldParentAdded.addAll(addedChildren);
             }
 
             @Override
-            public void onChildrenRemoved(TestTreeNode eventSource,
-                                          TestTreeNode changedNode,
-                                          Set<TestTreeNode> removedChildren) {
+            public void onChildrenRemoved(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> removedChildren) {
                 oldParentRemoved.addAll(removedChildren);
             }
         });
 
 
-        assertThat("Child has it's old parent.",movingChild.getParent().get(), is(oldParent));
+        assertThat("Child has it's old parent.", movingChild.getParent().get(), is(oldParent));
 
         movingChild.setParent(newParent);
 
-        assertThat("Child moved to new parent.",movingChild.getParent().get(), is(newParent));
+        assertThat("Child moved to new parent.", movingChild.getParent().get(), is(newParent));
 
         // these should be fulfilled, as this is normal behaviour
-        assertThat(oldParentAdded,is(empty()));
-        assertThat(oldParentRemoved,contains(movingChild));
-        assertThat(newParentAdded,contains(movingChild));
-        assertThat(newParentRemoved,is(empty()));
+        assertThat(oldParentAdded, is(empty()));
+        assertThat(oldParentRemoved, contains(movingChild));
+        assertThat(newParentAdded, contains(movingChild));
+        assertThat(newParentRemoved, is(empty()));
 
         // here comes the main thing: the root should notice, that the moved node is still below the same root.
-        assertThat(nodeUnderTestAdded,is(empty()));
-        assertThat(nodeUnderTestRemoved,is(empty()));
+        assertThat(nodeUnderTestAdded, is(empty()));
+        assertThat(nodeUnderTestRemoved, is(empty()));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -848,24 +795,18 @@ public class TreeNodeTest {
         Set<TestTreeNode> firstObserverAdded = new HashSet<>();
         Set<TestTreeNode> secondObserverAdded = new HashSet<>();
 
-        TreeNode.HierarchyObserver<TestTreeNode> firstReturned = nodeUnderTest.addObserver(
-                new TreeNode.HierarchyObserver<TestTreeNode>() {
-                    @Override
-                    public void onChildrenAdded(TestTreeNode eventSource,
-                                                TestTreeNode changedNode,
-                                                Set<TestTreeNode> addedChildren) {
-                        firstObserverAdded.addAll(addedChildren);
-                    }
-                });
-        TreeNode.HierarchyObserver<TestTreeNode> secondReturned = nodeUnderTest.addObserver(
-                new TreeNode.HierarchyObserver<TestTreeNode>() {
-                    @Override
-                    public void onChildrenAdded(TestTreeNode eventSource,
-                                                TestTreeNode changedNode,
-                                                Set<TestTreeNode> addedChildren) {
-                        secondObserverAdded.addAll(addedChildren);
-                    }
-                });
+        TreeNode.HierarchyObserver<TestTreeNode> firstReturned = nodeUnderTest.addObserver(new TreeNode.HierarchyObserver<TestTreeNode>() {
+            @Override
+            public void onChildrenAdded(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> addedChildren) {
+                firstObserverAdded.addAll(addedChildren);
+            }
+        });
+        TreeNode.HierarchyObserver<TestTreeNode> secondReturned = nodeUnderTest.addObserver(new TreeNode.HierarchyObserver<TestTreeNode>() {
+            @Override
+            public void onChildrenAdded(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> addedChildren) {
+                secondObserverAdded.addAll(addedChildren);
+            }
+        });
 
         TestTreeNode node = new TestTreeNode();
         nodeUnderTest.addChild(node);
@@ -881,9 +822,7 @@ public class TreeNodeTest {
 
         TreeNode.HierarchyObserver<TestTreeNode> observer = new TreeNode.HierarchyObserver<TestTreeNode>() {
             @Override
-            public void onChildrenAdded(TestTreeNode eventSource,
-                                        TestTreeNode changedNode,
-                                        Set<TestTreeNode> addedChildren) {
+            public void onChildrenAdded(TestTreeNode eventSource, TestTreeNode changedNode, Set<TestTreeNode> addedChildren) {
                 reportedAdds.addAll(addedChildren);
             }
         };
@@ -913,6 +852,164 @@ public class TreeNodeTest {
         assertThat(secondReturned, is(secondObserver));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void parentCanNotBeChild() throws Exception {
+        TestTreeNode parent = new TestTreeNode();
+        nodeUnderTest.setParent(parent);
+
+        nodeUnderTest.addChild(parent);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void grandparentCanNotBeChild() throws Exception {
+        TestTreeNode grandparent = new TestTreeNode();
+        TestTreeNode parent = new TestTreeNode();
+        parent.setParent(grandparent);
+        nodeUnderTest.setParent(parent);
+
+        nodeUnderTest.addChild(grandparent);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void childCanNotBeParent() throws Exception {
+        TestTreeNode child = new TestTreeNode();
+        nodeUnderTest.addChild(child);
+
+        nodeUnderTest.setParent(child);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void grandchildCanNotBeParent() throws Exception {
+        TestTreeNode grandchild = new TestTreeNode();
+        TestTreeNode child = new TestTreeNode();
+        nodeUnderTest.addChild(child);
+        child.addChild(grandchild);
+
+        nodeUnderTest.setParent(grandchild);
+    }
+
+    @Test
+    public void addChildWithChildValidator() throws Exception {
+
+        TestTreeNode childA = new TestTreeNode();
+        TestTreeNode childX = new TestTreeNode();
+        TestTreeNode childB = new TestTreeNode();
+
+        nodeUnderTest.addChildValidator(new TreeNode.ChildValidator<TestTreeNode>() {
+            @Override
+            public void validateChild(TestTreeNode parent, TestTreeNode child) throws ChildValidationException {
+
+                assertThat(parent,is(nodeUnderTest));
+
+                if (child == childX) {
+                    throw new ChildValidationException();
+                }
+            }
+        });
+
+        nodeUnderTest.addChild(childA);
+        try {
+            nodeUnderTest.addChild(childX);
+            fail("Expected ChildValidationException is missing!");
+        } catch (TreeNode.ChildValidator.ChildValidationException e) {
+            // expected
+        }
+        nodeUnderTest.addChild(childB);
+
+        assertThat(nodeUnderTest.getChildren(), containsInAnyOrder(childA, childB));
+    }
+
+    @Test
+    public void addChildrenWithChildValidator() throws Exception {
+
+        TestTreeNode childA = new TestTreeNode();
+        TestTreeNode childX = new TestTreeNode();
+        TestTreeNode childB = new TestTreeNode();
+
+        nodeUnderTest.addChildValidator(new TreeNode.ChildValidator<TestTreeNode>() {
+            @Override
+            public void validateChild(TestTreeNode parent, TestTreeNode child) throws ChildValidationException {
+
+                assertThat(parent,is(nodeUnderTest));
+
+                if (child == childX) {
+                    throw new ChildValidationException();
+                }
+            }
+        });
+
+        try {
+            nodeUnderTest.addChildren(Arrays.asList(childA, childX, childB));
+            fail("Expected ChildValidationException is missing!");
+        } catch (TreeNode.ChildValidator.ChildValidationException e) {
+            // expected
+        }
+
+        assertThat(nodeUnderTest.getChildren(), is(empty()));
+    }
+
+    @Test
+    public void removeChildValidator() throws Exception {
+        TestTreeNode childX = new TestTreeNode();
+
+        TreeNode.ChildValidator<TestTreeNode> childValidator = new TreeNode.ChildValidator<TestTreeNode>() {
+            @Override
+            public void validateChild(TestTreeNode parent, TestTreeNode child) throws ChildValidationException {
+                throw new ChildValidationException();
+            }
+        };
+        nodeUnderTest.addChildValidator(childValidator);
+
+        try {
+            nodeUnderTest.addChild(childX);
+            fail("Expected ChildValidationException is missing!");
+        } catch (TreeNode.ChildValidator.ChildValidationException e) {
+            // expected
+        }
+
+        nodeUnderTest.removeChildValidator(childValidator);
+
+        nodeUnderTest.addChild(childX);
+
+        assertThat(nodeUnderTest.getChildren(), contains(childX));
+    }
+
+    @Test
+    public void multipleChildValidators() throws Exception {
+        TestTreeNode childA = new TestTreeNode();
+        TestTreeNode childB = new TestTreeNode();
+
+        nodeUnderTest.addChildValidator(new TreeNode.ChildValidator<TestTreeNode>() {
+            @Override
+            public void validateChild(TestTreeNode parent, TestTreeNode child) throws ChildValidationException {
+                if (child == childA) {
+                    throw new ChildValidationException();
+                }
+            }
+        });
+        nodeUnderTest.addChildValidator(new TreeNode.ChildValidator<TestTreeNode>() {
+            @Override
+            public void validateChild(TestTreeNode parent, TestTreeNode child) throws ChildValidationException {
+                if (child == childB) {
+                    throw new ChildValidationException();
+                }
+            }
+        });
+
+        try {
+            nodeUnderTest.addChild(childA);
+        } catch (TreeNode.ChildValidator.ChildValidationException e) {
+            //expected
+        }
+        try {
+            nodeUnderTest.addChild(childB);
+        } catch (TreeNode.ChildValidator.ChildValidationException e) {
+            //expected
+        }
+
+        assertThat(nodeUnderTest.getChildren(), is(empty()));
+
+    }
 
     private static class TestTreeNode extends TreeNode<TestTreeNode> {
         // no implementation
